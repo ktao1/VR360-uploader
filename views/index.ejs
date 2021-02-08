@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Node Authentication</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <!-- load fontawesome -->
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id"
+        content="1048153026905-qoq0739kpvt05hrvqefbr2hqqepkg7oh.apps.googleusercontent.com">
+
+    <style>
+        body {
+            padding-top: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="jumbotron text-center">
+            <h1><span class="fa fa-lock"></span> VR360 Video Uploader</h1>
+
+            <p>You can upload your 360 video to youtube</p>
+
+            <a href="<%=url%>" class="btn btn-danger" data-onsuccess="onSignIn" ><span class="fa fa-youtube"></span> Upload Video</a>
+
+        </div>
+
+    </div>
+
+    <script>
+        function onSignIn(googleUser) {
+            var id_token = googleUser.getAuthResponse().id_token;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/login');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function () {
+                console.log('Signed in as: ' + xhr.responseText);
+            };
+            xhr.send(JSON.stringify({ token: id_token }));
+            console.log(id_token);
+        }
+    </script>
+</body>
+
+</html>
