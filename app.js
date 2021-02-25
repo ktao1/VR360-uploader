@@ -59,7 +59,7 @@ var upload = multer({
 
 var authed = false;
 var videoID = ""; 
-var chunk = "0:00 test1 0:10 test2 0:20 test3";
+var chunk = "";
 
 const scopes =
     "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/userinfo.profile";
@@ -113,16 +113,17 @@ app.post("/upload", (req, res) => {
             // console.log(err);
             return res.end("Something went wrong");
         } else {
-            console.log(req.body);
+            description = req.body.description;
 
-            /*
             // console.log(req.file.path);
             title = req.body.title;
             description = req.body.description;
             tags = req.body.tags;
+            // res.redirect('/uploadVideo');
             // console.log(title);
             // console.log(description);
             // console.log(tags);
+            
             const youtube = google.youtube({ version: "v3", auth: oAuth2Client });
             // console.log(youtube)
             youtube.videos.insert(
@@ -155,7 +156,7 @@ app.post("/upload", (req, res) => {
 
                     posted = true;
                     videoID = data.data.id;
-                    chunk = description;
+                    chunk = description.replace(/(\r\n|\n|\r)/gm, ";")
                     console.log(videoID);
                     // var videoURL = "youtu.be/" + videoID
                     res.redirect('/uploadVideo');
@@ -165,7 +166,7 @@ app.post("/upload", (req, res) => {
 
             // Display uploaded image for user validation
             //res.send(`You have uploaded this image: <hr/><vedio src="${req.file.path}" width="500"><hr /><a href="./">Upload another image</a>`);
-            */
+            
         }
     });
 });
