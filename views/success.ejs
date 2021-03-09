@@ -3,8 +3,13 @@
 
 <head>
   <title>Node Authentication</title>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
+    rel="stylesheet" type="text/css">
+  <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
   <style>
     html,
     body {
@@ -13,19 +18,16 @@
 
     body {
       display: -ms-flexbox;
-      display: -webkit-box;
-      display: flex;
+      /* display: -webkit-box;
+      display: flex; */
       -ms-flex-align: center;
       -ms-flex-pack: center;
       -webkit-box-align: center;
       -webkit-box-pack: center;
       justify-content: center;
-      padding-top: 10px;
       padding-bottom: 40px;
       background-color: #f5f5f5;
     }
-
-    
 
     p {
       font-size: 20px;
@@ -40,33 +42,238 @@
     }
 
     table,
-    th
-    {
+    th {
       border: 2px solid #60b3eb;
-    
+
     }
 
-    #steps th{
+    #steps th {
       font-size: 30px;
       padding: 10px;
     }
 
-    th{
+    th {
       width: 25%;
       text-align: center;
       font-size: 20px;
       padding: 10px;
     }
 
-    h1{
+    h1 {
       font-size: 5em;
     }
+
+    .container-fluid {
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #step1 {}
+
+    #step1 p {}
+
+    #step1input {}
+
+    #videoTitle {}
+
+    #step2 {}
+
+    #step2input {}
+
+    #videoChunking {}
+
+    #step3 {}
+
+    #step3input {}
+
+
+    body,
+    html {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Source Sans Pro';
+    }
+
+    .btn-xl {
+      padding: 1.25rem 2.5rem;
+    }
+
+    .content-section {
+      padding-top: 7.5rem;
+      padding-bottom: 7.5rem;
+    }
+
+    .content-section-heading h2 {
+      font-size: 3rem;
+    }
+
+    .content-section-heading h3 {
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-weight: 700;
+    }
+
+    .masthead {
+      min-height: 30rem;
+      position: relative;
+      display: table;
+      width: 100%;
+      height: auto;
+      padding-top: 7rem;
+      padding-bottom: 8rem;
+    }
+
+    .masthead h1 {
+      font-size: 4rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    @media (min-width: 992px) {
+      .masthead {
+        height: 100vh;
+      }
+
+      .masthead h1 {
+        font-size: 5.5rem;
+      }
+    }
+
+    .content-section {
+      padding-top: 7.5rem;
+      padding-bottom: 7.5rem;
+    }
+
+    form,
+    section {
+      width: 100%;
+      height: 100%;
+      display: table;
+      max-width: none;
+      background-color: #373B44;
+      text-align: center;
+    }
+
+    section container-fluid {
+      min-height: 100%;
+      align-content: center;
+    }
+
+    section div div {
+
+      position: fixed;
+      top: 130%;
+      /* bring your own prefixes */
+
+    }
+
+
+    /* .bg-primary {
+      background-color: #1D809F !important;
+    } */
   </style>
 
 </head>
 
 <body>
-  <div class="container">
+
+  <!-- Header -->
+  <header class="masthead d-flex bg-light">
+    <div class="container text-center my-auto">
+      <h1 class="mb-1">Video Uploader</h1>
+      <h3 class="mb-5">
+        <em></em>
+      </h3>
+      <a class="btn btn-primary btn-xl js-scroll-trigger" href="#video">Get Start</a>
+    </div>
+    <div class="overlay"></div>
+  </header>
+
+
+  <form action="/upload" method="POST" enctype="multipart/form-data">
+    <section class="content-section bg-primary text-white" id="video">
+      <div class="container-fluid">
+        <div class="col-sm-6" id="step1">
+          <h2>Click "Choose File button" choose the video you want to upload.</h2>
+        </div>
+        <div class="col-sm-4" id="step1input">
+          <input type="file" class="form-control" id="videoinput" name="file" required id="" />
+        </div>
+        <div class="col-sm-2">
+          <a class="btn btn-light btn-xl" href="#videoTitle">Next Step</a>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="content-section bg-light text-center" id="videoTitle">
+      <div class="container-fluid" id="videoTitle">
+        <div class="col-sm-6" id="step2">
+          <h2> Input your video's title.</h2>
+        </div>
+        <div class="col-sm-4" id="step2input">
+          <input type="text" name="title" placeholder="Please input your video's title" required class="form-control">
+        </div>
+        <div class="col-sm-2">
+          <a class="btn btn-primary btn-xl" href="#videoChunking">Next Step</a>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="bg-primary text-white">
+      <div class="container-fluid" id="videoChunking">
+        <div class="col-sm-6" id="step3">
+          <h2>Follow the <b>example</b>, input your chunking command.</h2>
+        </div>
+        <div class="col-sm-4" id="step3input">
+          <textarea name="description" class="form-control" id="description" cols="30" rows="10" placeholder="Example: 
+                0:00 - intro
+                0:20 - title
+                X:XX - XXXX
+                .......
+                2:00 - final
+
+                You must start at 0:00
+                  "></textarea>
+        </div>
+        <div class="col-sm-2">
+          <a class="btn btn-light btn-xl" href="#vidoeUpload">Next Step</a>
+        </div>
+      </div>
+    </section>
+
+    <header class="masthead d-flex bg-light">
+      <div class="container text-center my-auto" id="vidoeUpload">
+        <h1 class="mb-1">Ready to Go</h1>
+        <h3 class="mb-5">
+          <em>Clike "Upload Video" button to upload your video</em>
+        </h3>
+        <button class="btn btn-block btn-danger btn-xl">
+          Upload Video
+        </button>
+      </div>
+      <div class="overlay"></div>
+    </header>
+
+  </form>
+
+
+
+  <!-- <div class="container">
 
     <div class="container-fluid bg-3 text-center">
       <h1 class="title" style="color:#cc2500"><b>How to upload your video</b></h1>
@@ -98,7 +305,7 @@
     <hr>
 
     <div class="row">
-      <!-- GOOGLE INFORMATION -->
+    
       <div class="col-sm-6">
         <video id="video" width="550" height="517" controls></video>
       </div>
@@ -143,10 +350,7 @@
         </div>
       </div>
     </div>
-
-
-  </div>
-
+  </div> -->
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -178,6 +382,31 @@
   });
 </script>
 <script>
+  $(document).ready(function () {
+    // Add smooth scrolling to all links
+    $("a").on('click', function (event) {
+
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== "") {
+        // Prevent default anchor click behavior
+        event.preventDefault();
+
+        // Store hash
+        var hash = this.hash;
+
+        // Using jQuery's animate() method to add smooth page scroll
+        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+        }, 800, function () {
+
+          // Add hash (#) to URL when done scrolling (default click behavior)
+          window.location.hash = hash;
+        });
+      } // End if
+    });
+  });
+
 
   document.getElementById('description').addEventListener('keydown', function (e) {
     if (e.key == 'Tab') {

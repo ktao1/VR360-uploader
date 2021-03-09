@@ -6,7 +6,9 @@ const OAuth2Data = require('./credentials.json')
 
 const multer = require('multer')
 const fs = require('fs')
+
 const path = require('path')
+
 const { youtube } = require('googleapis/build/src/apis/youtube')
 const cookieParser = require('cookie-parser')
 
@@ -27,8 +29,6 @@ const oAuth2Client = new google.auth.OAuth2(
     REDIRECT_URL
 );
 
-// set up the multer
-
 var Storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, "./videos");
@@ -37,6 +37,19 @@ var Storage = multer.diskStorage({
         callback(null, file.originalname);
     },
 });
+
+var CaptionStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, "./caption");
+    },
+    filename: function (req, file, callback) {
+        callback(null, file.originalname);
+    },
+});
+
+var insertCaption = multer({
+    storage: CaptionStorage,
+}).single("file");
 
 var upload = multer({
     storage: Storage,
@@ -58,11 +71,11 @@ var upload = multer({
 // }).single("file"); //Field name and max count
 
 var authed = false;
-var videoID = ""; 
+var videoID = "";
 var chunk = "";
 
 const scopes =
-    "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/userinfo.profile";
+    "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtubepartner";
 
 var app = express()
 
@@ -92,7 +105,7 @@ app.get('/', (req, res) => {
 
         oauth2.userinfo.get(function (err, response) {
             if (err) throw err
-            
+
             var name = response.data.name
             var pic = response.data.picture
             //res.redirect('/uploadVideo');
@@ -102,9 +115,43 @@ app.get('/', (req, res) => {
 })
 
 app.get('/uploadVideo', (req, res) => {
-    res.render("uploadVideo", {videoID: videoID, chunk: chunk});
+    res.render("uploadVideo", { videoID: videoID, chunk: chunk });
 })
 
+//upload video
+app.post("/insertCaption", (req, res) => {
+    insertCaption(req, res, function (err) {
+        if (err) {
+            // console.log(err);
+            return res.end("Something went wrong");
+        } else {
+            console.log(req.file);
+            const youtube = google.youtube({ version: "v3", auth: oAuth2Client });
+            youtube.captions.insert(
+                {
+
+                    resource: {
+                        snippet: {
+                            videoId: videoID,
+                            language: 'en',
+                            name: 'English Subtitle',
+                        },
+                    },
+                    part: "snippet",
+                    media: {
+                        body: fs.createReadStream(req.file.path)
+                    },
+
+                },
+                (err, data) => {
+                    if (err) throw err
+                    fs.unlinkSync(req.file.path);
+                    console.log(data);
+                }
+            )
+        }
+    });
+});
 
 //upload video
 app.post("/upload", (req, res) => {
@@ -115,7 +162,7 @@ app.post("/upload", (req, res) => {
         } else {
             description = req.body.description;
 
-            // console.log(req.file.path);
+            console.log(req.file);
             title = req.body.title;
             description = req.body.description;
             tags = req.body.tags;
@@ -123,9 +170,11 @@ app.post("/upload", (req, res) => {
             // console.log(title);
             // console.log(description);
             // console.log(tags);
-            
+
             const youtube = google.youtube({ version: "v3", auth: oAuth2Client });
             // console.log(youtube)
+
+
             youtube.videos.insert(
                 {
                     resource: {
@@ -164,9 +213,10 @@ app.post("/upload", (req, res) => {
                 }
             );
 
+
             // Display uploaded image for user validation
             //res.send(`You have uploaded this image: <hr/><vedio src="${req.file.path}" width="500"><hr /><a href="./">Upload another image</a>`);
-            
+
         }
     });
 });

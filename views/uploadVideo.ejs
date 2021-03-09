@@ -12,6 +12,7 @@
     body {
       height: 100%;
     }
+
     body {
       display: -ms-flexbox;
       display: -webkit-box;
@@ -25,15 +26,14 @@
       padding-bottom: 40px;
       background-color: #f5f5f5;
     }
-    
+
     .container {
       margin-top: 5%;
     }
 
-    .title{
+    .title {
       margin-bottom: 50px;
     }
-
   </style>
 </head>
 
@@ -59,15 +59,13 @@
     </div>
 
     <div class="row">
-      <form>
+      <form action="/insertCaption" method="POST" enctype="multipart/form-data">
         <div class="form-group">
           <label for="exampleFormControlFile1">Your subtitle</label>
-          <input type="file" class="form-control-file" id="exampleFormControlFile1">
-          <div class="form-group">
-            <button class="btn btn-block btn-danger">
-              Upload Subtitle
-            </button>
-          </div>
+          <input type="file" class="form-control"  name="file" required id="" />
+          <button class="btn btn-block btn-danger btn-xl">
+            Upload Video
+          </button>
       </form>
     </div>
   </div>
