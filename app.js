@@ -1,5 +1,6 @@
 const { response } = require('express')
 var express = require('express')
+var JSAlert = require("js-alert");
 const { google, oauth2_v2 } = require('googleapis')
 
 const OAuth2Data = require('./credentials.json')
@@ -17,6 +18,7 @@ const cookieParser = require('cookie-parser')
 var title, description;
 var tag = [];
 
+var checkUpload = true;
 
 // handle the autentication
 const CLIENT_ID = OAuth2Data.web.client_id;
@@ -53,8 +55,31 @@ var insertCaption = multer({
 
 var upload = multer({
     storage: Storage,
+    fileFilter: (req, file, cb) => {
+        var ext = path.extname(file.originalname);
+        console.log(ext);
+        if(ext !== '.mp4'){
+            checkUpload = false;
+            return cb(null, false, new Error('Only ,mp4 file can be upload'));
+        }
+        cb(null, true);
+    }
 }).single("file"); //Field name and max count
 
+/*
+var upload = multer({
+    storage: Storage,
+    fileFilter: (req, file, cb) => {
+        var ext = path.extname(file.originalname);
+        console.log(ext);
+        if(ext !== '.mp4'){
+            return callback(null, false, new Error('Only ,mp4 file can be upload'));
+        }
+        callback(null, true);
+    }
+}).single("file"); //Field name and max count
+
+*/
 // var Storage = multer.diskStorage({
 //     destination: function (req, file, callback) {
 //         callback(null, "./videos");
@@ -147,6 +172,7 @@ app.post("/insertCaption", (req, res) => {
                     if (err) throw err
                     fs.unlinkSync(req.file.path);
                     console.log(data);
+                    res.redirect('/uploadVideo');
                 }
             )
         }
@@ -156,7 +182,10 @@ app.post("/insertCaption", (req, res) => {
 //upload video
 app.post("/upload", (req, res) => {
     upload(req, res, function (err) {
-        if (err) {
+        if (!checkUpload){
+            return res.end("Video's Format is wrong");
+        }
+        else if (err) {
             // console.log(err);
             return res.end("Something went wrong");
         } else {
@@ -240,6 +269,6 @@ app.get('/google/callback', (req, res) => {
     }
 })
 
-app.listen(3000, () => {
+app.listen(3000, '0.0.0.0',() => {
     console.log("App is listening on Port 3000")
 })

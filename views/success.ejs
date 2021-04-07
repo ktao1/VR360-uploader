@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Node Authentication</title>
+  <title>VR 360 Video Uploader</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
@@ -69,24 +69,6 @@
       justify-content: center;
       align-items: center;
     }
-
-    #step1 {}
-
-    #step1 p {}
-
-    #step1input {}
-
-    #videoTitle {}
-
-    #step2 {}
-
-    #step2input {}
-
-    #videoChunking {}
-
-    #step3 {}
-
-    #step3input {}
 
 
     body,
@@ -207,13 +189,13 @@
     <section class="content-section bg-primary text-white" id="video">
       <div class="container-fluid">
         <div class="col-sm-6" id="step1">
-          <h2>Click "Choose File button" choose the video you want to upload.</h2>
+          <h1>Click "Choose File button" choose the video you want to upload.</h1>
         </div>
         <div class="col-sm-4" id="step1input">
           <input type="file" class="form-control" id="videoinput" name="file" required id="" />
         </div>
         <div class="col-sm-2">
-          <a class="btn btn-light btn-xl" href="#videoTitle">Next Step</a>
+          <a class="btn btn-light btn-xl" href="#videoTitle" id="checkFormat">Next Step</a>
         </div>
       </div>
     </section>
@@ -222,10 +204,11 @@
     <section class="content-section bg-light text-center" id="videoTitle">
       <div class="container-fluid" id="videoTitle">
         <div class="col-sm-6" id="step2">
-          <h2> Input your video's title.</h2>
+          <h1> Type your video's title.</h1>
         </div>
         <div class="col-sm-4" id="step2input">
-          <input type="text" name="title" placeholder="Please input your video's title" required class="form-control">
+          <input type="text" name="title" placeholder="Please input your video's title" required class="form-control"
+            id="videoTitleInput">
         </div>
         <div class="col-sm-2">
           <a class="btn btn-primary btn-xl" href="#videoChunking">Next Step</a>
@@ -237,18 +220,28 @@
     <section class="bg-primary text-white">
       <div class="container-fluid" id="videoChunking">
         <div class="col-sm-6" id="step3">
-          <h2>Follow the <b>example</b>, input your chunking command.</h2>
+          <h1>Follow the <b>example</b>, type your chunking command. </h1>
+          <h2>
+            Example:
+            <br>
+            (You must start at 0:00)
+            <br>
+            0:00 intro
+            <br>
+            0:20 title
+            <br>
+            X:XX XXXX
+            <br>
+            ...
+            <br>
+            ...
+            <br>
+            2:00 final
+          </h2>
         </div>
         <div class="col-sm-4" id="step3input">
-          <textarea name="description" class="form-control" id="description" cols="30" rows="10" placeholder="Example: 
-                0:00 - intro
-                0:20 - title
-                X:XX - XXXX
-                .......
-                2:00 - final
-
-                You must start at 0:00
-                  "></textarea>
+          <textarea name="description" class="form-control" id="description" cols="30" rows="10"
+            placeholder=""></textarea>
         </div>
         <div class="col-sm-2">
           <a class="btn btn-light btn-xl" href="#vidoeUpload">Next Step</a>
@@ -272,85 +265,6 @@
   </form>
 
 
-
-  <!-- <div class="container">
-
-    <div class="container-fluid bg-3 text-center">
-      <h1 class="title" style="color:#cc2500"><b>How to upload your video</b></h1>
-      <table style="width: 100%;">
-        <tr id="steps">
-          <th>Step 1</th>
-          <th>Step 2</th>
-          <th>Step 3</th>
-          <th>Step 4</th>
-        </tr>
-        <tr>
-          <th>
-            Input your video's title.
-          </th>
-          <th>
-            Follow the <b>example</b>, input your chunking command.
-          </th>
-          <th>
-            Click <b>Choose File button</b> choose the video you want to upload. Once you choosed the video, you can
-            preview the video on the left.
-          </th>
-          <th>
-            Click <b>Upload Video</b> button to upload video.
-          </th>
-        </tr>
-      </table>
-    </div>
-
-    <hr>
-
-    <div class="row">
-    
-      <div class="col-sm-6">
-        <video id="video" width="550" height="517" controls></video>
-      </div>
-      <div class="col-sm-6">
-        <div class="well">
-          <h3 style="color:#cc2500">
-            <span class="fa fa-youtube"></span> VR360 Video Uploader
-          </h3>
-
-          <form action="/upload" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-              <div class="form-group">
-                <label>Video's title</label>
-                <input type="text" name="title" placeholder="Please input your video's title" required
-                  class="form-control">
-              </div>
-
-              <div class="form-group">
-                <label>Chunk your video by command</label>
-                <textarea name="description" class="form-control" id="description" cols="30" rows="10" placeholder="Example: 
-                0:00 - intro
-                0:20 - title
-                X:XX - XXXX
-                .......
-                2:00 - final
-
-                You must start at 0:00
-                  "></textarea>
-              </div>
-              <label>Choose the video you want to upload</label>
-              <div class="form-group">
-                <input type="file" class="form-control" id="videoinput" name="file" required id="" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <button class="btn btn-block btn-danger">
-                Upload Video
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -382,29 +296,55 @@
   });
 </script>
 <script>
+
   $(document).ready(function () {
     // Add smooth scrolling to all links
     $("a").on('click', function (event) {
-
       // Make sure this.hash has a value before overriding default behavior
       if (this.hash !== "") {
-        // Prevent default anchor click behavior
-        event.preventDefault();
+        var canScroll = true;
+        var href = $(this).attr('href')
+        if (href == "#videoTitle") {
+          var type = $('#videoinput').val().split('\\').pop().split('.')[1];
 
-        // Store hash
-        var hash = this.hash;
+          if (type != 'm4v' &&
+            type != 'avi' &&
+            type != 'mpg' &&
+            type != 'mp4') {
+            alert('Please select a valid video file. Example: .m4v, .avi, .mpg, .mp4');
+            return false;
+          }
+        }
+        else if (href != "#video") {
+          if (!$("#videoTitleInput").val()) {
+            alert('Please type your video title');
+            canScroll = false;
+          }
+          else if (!$("#description").val() && !canScroll) {
+            alert('Please type your video description')
+            canScroll = false;
+          }
 
-        // Using jQuery's animate() method to add smooth page scroll
-        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-        $('html, body').animate({
-          scrollTop: $(hash).offset().top
-        }, 800, function () {
+          if (!canScroll)
+            return false;
+        }
 
-          // Add hash (#) to URL when done scrolling (default click behavior)
-          window.location.hash = hash;
-        });
-      } // End if
-    });
+          // Prevent default anchor click behavior
+          event.preventDefault();
+          // Store hash
+          var hash = this.hash;
+
+          // Using jQuery's animate() method to add smooth page scroll
+          // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+          $('html, body').animate({
+            scrollTop: $(hash).offset().top
+          }, 800, function () {
+
+            // Add hash (#) to URL when done scrolling (default click behavior)
+            window.location.hash = hash;
+          });
+        } // End if
+      });
   });
 
 
@@ -431,12 +371,7 @@
       $(this).val(s + "\n");
     }
   });
-  // $(window).keydown(function(event){
-  //   if(event.keyCode == 13) {
-  //     event.preventDefault();
-  //     return false;
-  //   }
-  // });
+
 </script>
 
 </html>
