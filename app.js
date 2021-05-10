@@ -247,7 +247,7 @@ app.post("/upload", (req, res) => {
 //     res.redirect('/')
 // })
 
-app.get("/google/callback", (req, res) => {
+app.get("http://104.236.63.148/google/callback", (req, res) => {
   // excange code with access token
   const code = req.query.code;
   if (code) {
