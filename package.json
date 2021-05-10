@@ -4,7 +4,8 @@
   "description": "create a website server that suer can upload videos to thier video channel. resource:'https://www.youtube.com/watch?v=Uv7cIJAymSs'",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "author": "Kecheng Tao",
   "license": "MIT",
